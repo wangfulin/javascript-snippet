@@ -1,23 +1,65 @@
-// ÅĞ¶Ï×Ö·û´®ÊÇ·ñ·ûºÏÊ±¼äµÄ¸ñÊ½
+// åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ç¬¦åˆæ—¶é—´çš„æ ¼å¼
 function TimeUtil(){
 	
 }
 
-// Ö§³ÖYYYY-mm-DD [HH:MM:SS]
-// Ö§³ÖYYYY/mm/DD [HH:MM:SS]
-// Ö§³ÖYYYY_mm_DD [HH:MM:SS]
-// Ö§³ÖYYYY.mm.DD [HH:MM:SS]
-// Ö§³ÖYYYYÄêmmÔÂDDÈÕ [HHÊ±mm·ÖssÃë]
+// æ”¯æŒYYYY-mm-DD [HH:MM:SS]
+// æ”¯æŒYYYY/mm/DD [HH:MM:SS]
+// æ”¯æŒYYYY_mm_DD [HH:MM:SS]
+// æ”¯æŒYYYY.mm.DD [HH:MM:SS]
+// æ”¯æŒYYYYå¹´mmæœˆDDæ—¥ [HHæ—¶mmåˆ†ssç§’]
 TimeUtil.prototype.validate = function(timeStr){
-	var dateExp = new RegExp(/((^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._Äê])(10|12|0?[13578])([-\/\._ÔÂ])(3[01]|[12][0-9]|0?[1-9])ÈÕ?)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._Äê])(11|0?[469])([-\/\._ÔÂ])(30|[12][0-9]|0?[1-9]))ÈÕ?|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._Äê])(0?2)([-\/\._ÔÂ])(2[0-8]|1[0-9]|0?[1-9])ÈÕ?)|(^([2468][048]00)([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([3579][26]00)([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?$)|(^([1][89][0][48])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([2-9][0-9][0][48])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([1][89][2468][048])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([2-9][0-9][2468][048])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([1][89][13579][26])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?)|(^([2-9][0-9][13579][26])([-\/\._Äê])(0?2)([-\/\._ÔÂ])(29)ÈÕ?))((\s+)(0?\d{1}|1\d{1}|2[0-3]):(0?|[1-5])\d{1}:(0?|[1-5])\d{1})?$/);
-	return dateExp.test(timeStr);
+	var dateExp = new RegExp(/((^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._å¹´])(10|12|0?[13578])([-\/\._æœˆ])(3[01]|[12][0-9]|0?[1-9])æ—¥?)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._å¹´])(11|0?[469])([-\/\._æœˆ])(30|[12][0-9]|0?[1-9]))æ—¥?|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._å¹´])(0?2)([-\/\._æœˆ])(2[0-8]|1[0-9]|0?[1-9])æ—¥?)|(^([2468][048]00)([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([3579][26]00)([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?$)|(^([1][89][0][48])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([2-9][0-9][0][48])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([1][89][2468][048])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([2-9][0-9][2468][048])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([1][89][13579][26])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?)|(^([2-9][0-9][13579][26])([-\/\._å¹´])(0?2)([-\/\._æœˆ])(29)æ—¥?))((\s+)(0?\d{1}|1\d{1}|2[0-3])[:æ—¶](0?|[1-5])\d{1}[:åˆ†](0?|[1-5])\d{1}ç§’?)?$/);
+	return dateExp.test(timeStr.trim());
 	
+}
+
+// è·å–æ—¥æœŸå­—ç¬¦ä¸²çš„å¹´æœˆæ—¥ï¼Œæ—¶åˆ†ç§’åˆ†åˆ«çš„å€¼
+TimeUtil.prototype.getSplittedTime = function(timeStr){
+	var TimeSplitted = timeStr.trim().split(/\s+|-|\.|_|:|[å¹´æœˆæ—¥æ—¶åˆ†ç§’]/),
+	    filteredTimeSplitted = removeEmptyStrInArray(TimeSplitted);
+		
+	return filteredTimeSplitted;
 }
 
 TimeUtil.prototype.compare = function(timeStr1, timeStr2){
+	var filteredTimeSplitted1 = this.getSplittedTime(timeStr1);
+
+	var filteredTimeSplitted2 = this.getSplittedTime(timeStr2);
 	
+	for(var i=0;i<6;i++){
+		if(filteredTimeSplitted1[i]>filteredTimeSplitted2[i]){
+			return false;
+		}
+	}
+	return true;
 }
 
-TimeUtil.prototype.format = function(timeStr, format = 'YYYY-mm-DD HH:MM:SS'){
+// æŠŠæ•°ç»„ä¸­çš„''ç©ºå­—ç¬¦ä¸²å»æ‰ï¼ŒåŒæ—¶å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•°å­—
+function removeEmptyStrInArray(arr){
+	var len = arr.length;
+	var newArr = [];
+	for(var i = 0;i < len; i++){
+		if(arr[i] !== ""){
+			newArr.push(parseInt(arr[i]));
+		}
+	}
+	return newArr;
+}
+
+TimeUtil.prototype.getTime = function(timeStr){
+	var filteredTimeSplitted = this.getSplittedTime(timeStr);
+	var time = new Date();
+	time.setFullYear(filteredTimeSplitted[0]);
+	time.setMonth(filteredTimeSplitted[1]-1);
+	time.setDate(filteredTimeSplitted[2]);
+	time.setHours(filteredTimeSplitted[3]);
+	time.setMinutes(filteredTimeSplitted[4]);
+	time.setSeconds(filteredTimeSplitted[5]);
+	
+	return time.getTime();
+}
+
+TimeUtil.prototype.format = function(timeStr, format){
 	
 }
